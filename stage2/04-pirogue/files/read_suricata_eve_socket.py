@@ -52,6 +52,7 @@ if __name__ == '__main__':
     db = 'suricata'
     client = InfluxDBClient('127.0.0.1', 8086, '', '', db)
     client.create_database(db)
+    client.create_retention_policy(f'{db}_5d', '5d', 1, database=db, default=True)
     server = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
     server.bind(socket_path)
     systemd.daemon.notify('READY=1')

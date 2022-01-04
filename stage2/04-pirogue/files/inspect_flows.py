@@ -9,6 +9,7 @@ if __name__ == '__main__':
     db = 'flows'
     client = InfluxDBClient('127.0.0.1', 8086, '', '', db)
     client.create_database(db)
+    client.create_retention_policy(f'{db}_5d', '5d', 1, database=db, default=True)
 
     online_streamer = NFStreamer(source="wlan0")
     reader = geoip2.database.Reader('/etc/pirogue/GeoLite2-City.mmdb')
