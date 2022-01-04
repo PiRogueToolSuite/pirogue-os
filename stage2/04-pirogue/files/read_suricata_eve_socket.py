@@ -69,8 +69,8 @@ if __name__ == '__main__':
                 json_obj = json.loads(event)
                 suricata_event = convert_to_influxdb_format(json_obj)
                 suricata_events.append(suricata_event)
-            client.write_points(suricata_events, database=db)
             print(suricata_events)
+            client.write_points(suricata_events, database=db)
         except Exception as e:
             print(e)
             

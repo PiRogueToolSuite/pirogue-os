@@ -95,7 +95,7 @@ outputs:
       types:
         - alert:
             metadata:  # enable inclusion of app layer metadata with alert. Default yes
-              app-layer: true
+              app-layer: false
               flow: false
               rule:
                 metadata: false
