@@ -101,10 +101,18 @@ mkdir -p "${ROOTFS_DIR}/etc/pirogue/"
 install -m 644 files/read_suricata_eve_socket.py  "${ROOTFS_DIR}/etc/pirogue/"
 install -m 644 files/pirogue_eve_collector.service  "${ROOTFS_DIR}/etc/systemd/system/pirogue_eve_collector.service"
 
-install -m 755 files/update_suricata_rules  "${ROOTFS_DIR}/etc/cron.daily/update_suricata_rules"
-
 on_chroot << EOF
 systemctl enable pirogue_eve_collector
+EOF
+
+# PiRogue maintenance script
+install -m 755 files/pirogue_maintenance.sh  "${ROOTFS_DIR}/etc/pirogue/"
+install -m 644 files/pirogue_daily_maintenance.timer  "${ROOTFS_DIR}/etc/systemd/system/pirogue_daily_maintenance.timer"
+install -m 644 files/pirogue_daily_maintenance.service  "${ROOTFS_DIR}/etc/systemd/system/pirogue_daily_maintenance.service"
+
+on_chroot << EOF
+systemctl enable pirogue_daily_maintenance.service
+systemctl enable pirogue_daily_maintenance.timer
 EOF
 
 install -m 644 files/pirogue_rfkill.service  "${ROOTFS_DIR}/etc/systemd/system/pirogue_rfkill.service"

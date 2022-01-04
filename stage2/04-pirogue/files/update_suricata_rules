@@ -1,2 +1,0 @@
-/usr/bin/suricata-update --no-check-certificate
-/usr/bin/suricatasc -c reload-rules
