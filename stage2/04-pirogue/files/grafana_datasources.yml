@@ -1,0 +1,16 @@
+
+apiVersion: 1
+
+datasources:
+  - name: InfluxDB - Flows
+    type: influxdb
+    isDefault: true
+    access: proxy
+    database: flows
+    url: http://127.0.0.1:8086
+  - name: InfluxDB - Suricata
+    type: influxdb
+    isDefault: false
+    access: proxy
+    database: suricata
+    url: http://127.0.0.1:8086

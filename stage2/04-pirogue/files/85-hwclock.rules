@@ -1,0 +1,3 @@
+# On the Raspberry Pi the RTC isn't available when systemd tries,
+# set the time from RTC now when it is available.
+KERNEL=="rtc0", RUN+="/sbin/hwclock --rtc=$root/$name --hctosys"

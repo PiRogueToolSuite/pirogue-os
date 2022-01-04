@@ -1,0 +1,14 @@
+[Unit]
+Description=PiRogue DPI flow inspection
+Wants=influxdb.service
+
+[Service]
+ExecStart=/usr/bin/python3 /etc/pirogue/inspect_flows.py
+Environment=PYTHONUNBUFFERED=1
+Restart=on-failure
+Type=notify
+
+[Install]
+# Tell systemd to automatically start this service when the system boots
+# (assuming the service is enabled)
+WantedBy=default.target

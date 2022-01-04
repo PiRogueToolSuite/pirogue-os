@@ -1,0 +1,10 @@
+[Unit]
+Description=Start RFKill unblock at start up of PiRogue
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/rfkill unblock all
+ExecStop=
+
+[Install]
+WantedBy=default.target
