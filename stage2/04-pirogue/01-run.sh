@@ -80,7 +80,7 @@ install -v -m 644 files/grafana.ini	 "${ROOTFS_DIR}/etc/grafana/grafana.ini"
 # Install Python stuff
 on_chroot << EOF
 echo "Install Python stuff"
-pip3 install pyshark frida-tools objection geoip2 Adafruit-Blinka Pillow
+pip3 install -U pyshark frida-tools objection geoip2 Adafruit-Blinka Pillow numpy==1.22.0
 EOF
 ###
 # Configure Suricata
@@ -140,7 +140,6 @@ on_chroot << EOF
 systemctl enable pirogue_infos_screen
 EOF
 
-
 # Enable I2C and SPI
 on_chroot << EOF
 echo dtparam=i2c_arm=on >> /boot/config.txt
@@ -198,6 +197,7 @@ rm -rf libpcap
 # nDPI
 git clone --branch dev https://github.com/ntop/nDPI.git
 cd nDPI
+git checkout 550e6fe6fcd96e507763db66873791b96f19fe2b
 ./autogen.sh
 ./configure
 make
@@ -210,6 +210,7 @@ rm -rf nDPI
 # nfstream
 git clone https://github.com/nfstream/nfstream.git
 cd nfstream
+git checkout v6.3.5
 python3 -m pip install -r requirements.txt
 python3 setup.py bdist_wheel
 pip3 install . 
