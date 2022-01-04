@@ -77,7 +77,7 @@ outputs:
   # Extensible Event Format (nicknamed EVE) event log in JSON format
   - eve-log:
       enabled: yes
-      filetype: unix_stream
+      filetype: unix_dgram
       filename: /tmp/suri.sock
       level: Info
       #Alert, Critical, Error, Warning, Notice, Info, Debug

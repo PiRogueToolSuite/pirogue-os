@@ -52,17 +52,15 @@ if __name__ == '__main__':
     db = 'suricata'
     client = InfluxDBClient('127.0.0.1', 8086, '', '', db)
     client.create_database(db)
-    server = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+    server = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
     server.bind(socket_path)
-    server.listen(1)
     systemd.daemon.notify('READY=1')
     while True:
         try:
-            conn, _ = server.accept()
-            data = conn.recv(buf_size)
+            data = server.recv(buf_size)
             event = data
             while len(data) == buf_size:
-                data = conn.recv(buf_size)
+                data = server.recv(buf_size)
                 event += data
             decoded_events = event.decode('utf-8').strip()
             suricata_events = []
