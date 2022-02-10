@@ -83,7 +83,7 @@ outputs:
       #Alert, Critical, Error, Warning, Notice, Info, Debug
       metadata: yes 
       pcap-file: false
-      community-id: false
+      community-id: true
       community-id-seed: 0
 
       xff:

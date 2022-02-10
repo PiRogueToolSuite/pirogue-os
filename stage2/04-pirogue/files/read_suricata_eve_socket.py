@@ -2,6 +2,7 @@ import json
 import os
 import socket
 from collections.abc import MutableMapping
+import base64
 
 from influxdb import InfluxDBClient
 
@@ -29,7 +30,9 @@ def convert_to_influxdb_format(eve_obj):
             'event_type': eve_obj.get('event_type'),
             'proto': eve_obj.get('proto'),
             'src_ip': eve_obj.get('src_ip'),
-            'dest_ip': eve_obj.get('dest_ip')
+            'dest_ip': eve_obj.get('dest_ip'),
+            'community_id': eve_obj.get('community_id'),
+            'community_id_b64': base64.b64encode(bytes(eve_obj.get('community_id'), 'utf-8')).decode('utf-8'),
         },
         'time': eve_obj.get('timestamp'),
         'fields': {

@@ -1,606 +1,1481 @@
 {
-    "annotations": {
-      "list": [
-        {
-          "builtIn": 1,
-          "datasource": "-- Grafana --",
-          "enable": true,
-          "hide": true,
-          "iconColor": "rgba(0, 211, 255, 1)",
-          "name": "Annotations & Alerts",
-          "target": {
-            "limit": 100,
-            "matchAny": false,
-            "tags": [],
-            "type": "dashboard"
-          },
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
           "type": "dashboard"
-        }
-      ]
-    },
-    "editable": true,
-    "gnetId": null,
-    "graphTooltip": 0,
-    "id": 1,
-    "links": [],
-    "panels": [
-      {
-        "datasource": null,
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": []
         },
-        "gridPos": {
-          "h": 11,
-          "w": 15,
-          "x": 0,
-          "y": 0
-        },
-        "id": 2,
-        "options": {
-          "basemap": {
-            "config": {},
-            "type": "default"
-          },
-          "controls": {
-            "mouseWheelZoom": true,
-            "showAttribution": true,
-            "showDebug": false,
-            "showScale": false,
-            "showZoom": true
-          },
-          "layers": [
-            {
-              "config": {
-                "blur": 15,
-                "radius": 5,
-                "weight": {
-                  "fixed": 1,
-                  "max": 1,
-                  "min": 0
-                }
-              },
-              "location": {
-                "mode": "auto"
-              },
-              "type": "heatmap"
-            }
-          ],
-          "view": {
-            "id": "coords",
-            "lat": 34.829376,
-            "lon": -7.748209,
-            "zoom": 1.99
-          }
-        },
-        "targets": [
-          {
-            "query": "SELECT \"latitude\", \"longitude\", \"bidirectional_bytes\" FROM \"flow\" WHERE $timeFilter AND latitude!=0",
-            "rawQuery": true,
-            "refId": "A",
-            "resultFormat": "table"
-          }
-        ],
-        "title": "Servers location",
-        "type": "geomap"
-      },
-      {
-        "datasource": null,
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "custom": {
-              "axisLabel": "",
-              "axisPlacement": "hidden",
-              "axisSoftMin": 0,
-              "fillOpacity": 80,
-              "gradientMode": "none",
-              "hideFrom": {
-                "legend": false,
-                "tooltip": false,
-                "viz": false
-              },
-              "lineWidth": 0
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "bidirectional_bytes (count)"
-              },
-              "properties": [
-                {
-                  "id": "color",
-                  "value": {
-                    "mode": "palette-classic"
-                  }
-                }
-              ]
-            }
-          ]
-        },
-        "gridPos": {
-          "h": 11,
-          "w": 9,
-          "x": 15,
-          "y": 0
-        },
-        "id": 6,
-        "options": {
-          "barWidth": 0.38,
-          "groupWidth": 0.7,
-          "legend": {
-            "calcs": [],
-            "displayMode": "hidden",
-            "placement": "bottom"
-          },
-          "orientation": "horizontal",
-          "showValue": "always",
-          "stacking": "none",
-          "text": {},
-          "tooltip": {
-            "mode": "single"
-          }
-        },
-        "pluginVersion": "8.1.5",
-        "targets": [
-          {
-            "groupBy": [],
-            "measurement": "flow",
-            "orderByTime": "ASC",
-            "policy": "default",
-            "query": "SELECT distinct(country_iso), sum(bidirectional_bytes) FROM \"flow\" WHERE $timeFilter GROUP BY country_iso",
-            "rawQuery": false,
-            "refId": "A",
-            "resultFormat": "table",
-            "select": [
-              [
-                {
-                  "params": [
-                    "country"
-                  ],
-                  "type": "field"
-                }
-              ],
-              [
-                {
-                  "params": [
-                    "bidirectional_bytes"
-                  ],
-                  "type": "field"
-                }
-              ]
-            ],
-            "tags": []
-          }
-        ],
-        "title": "Flows per country",
-        "transformations": [
-          {
-            "id": "filterByValue",
-            "options": {
-              "filters": [
-                {
-                  "config": {
-                    "id": "isNotNull",
-                    "options": {}
-                  },
-                  "fieldName": "country"
-                }
-              ],
-              "match": "any",
-              "type": "include"
-            }
-          },
-          {
-            "id": "groupBy",
-            "options": {
-              "fields": {
-                "Time": {
-                  "aggregations": [],
-                  "operation": null
-                },
-                "bidirectional_bytes": {
-                  "aggregations": [
-                    "count"
-                  ],
-                  "operation": "aggregate"
-                },
-                "country": {
-                  "aggregations": [],
-                  "operation": "groupby"
-                },
-                "country_iso": {
-                  "aggregations": [
-                    "count"
-                  ],
-                  "operation": "groupby"
-                }
-              }
-            }
-          },
-          {
-            "id": "sortBy",
-            "options": {
-              "fields": {},
-              "sort": [
-                {
-                  "desc": true,
-                  "field": "bidirectional_bytes (count)"
-                }
-              ]
-            }
-          }
-        ],
-        "type": "barchart"
-      },
-      {
-        "datasource": null,
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "custom": {
-              "align": "auto",
-              "displayMode": "auto",
-              "filterable": false
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "red",
-                  "value": 80
-                }
-              ]
-            }
-          },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "country_iso"
-              },
-              "properties": [
-                {
-                  "id": "custom.width",
-                  "value": 91
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "Time"
-              },
-              "properties": [
-                {
-                  "id": "custom.width",
-                  "value": 143
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "bidirectional_bytes"
-              },
-              "properties": [
-                {
-                  "id": "unit",
-                  "value": "decbytes"
-                }
-              ]
-            }
-          ]
-        },
-        "gridPos": {
-          "h": 17,
-          "w": 15,
-          "x": 0,
-          "y": 11
-        },
-        "id": 8,
-        "options": {
-          "showHeader": true,
-          "sortBy": []
-        },
-        "pluginVersion": "8.1.5",
-        "targets": [
-          {
-            "groupBy": [],
-            "measurement": "flow",
-            "orderByTime": "DESC",
-            "policy": "default",
-            "refId": "A",
-            "resultFormat": "table",
-            "select": [
-              [
-                {
-                  "params": [
-                    "application_category_name"
-                  ],
-                  "type": "field"
-                }
-              ],
-              [
-                {
-                  "params": [
-                    "application_name"
-                  ],
-                  "type": "field"
-                }
-              ],
-              [
-                {
-                  "params": [
-                    "requested_server_name"
-                  ],
-                  "type": "field"
-                }
-              ],
-              [
-                {
-                  "params": [
-                    "src_ip"
-                  ],
-                  "type": "field"
-                }
-              ],
-              [
-                {
-                  "params": [
-                    "dst_ip"
-                  ],
-                  "type": "field"
-                }
-              ],
-              [
-                {
-                  "params": [
-                    "country_iso"
-                  ],
-                  "type": "field"
-                }
-              ],
-              [
-                {
-                  "params": [
-                    "bidirectional_bytes"
-                  ],
-                  "type": "field"
-                }
-              ]
-            ],
-            "tags": []
-          }
-        ],
-        "title": "Flows",
-        "type": "table"
+        "type": "dashboard"
       },
       {
         "datasource": "InfluxDB - Suricata",
-        "fieldConfig": {
-          "defaults": {
-            "color": {
-              "mode": "thresholds"
-            },
-            "custom": {
-              "align": "auto",
-              "displayMode": "auto",
-              "filterable": false
-            },
-            "mappings": [],
-            "thresholds": {
-              "mode": "absolute",
-              "steps": [
-                {
-                  "color": "green",
-                  "value": null
-                },
-                {
-                  "color": "dark-red",
-                  "value": 1
-                },
-                {
-                  "color": "#EAB839",
-                  "value": 2
-                },
-                {
-                  "color": "#6ED0E0",
-                  "value": 3
-                }
-              ]
-            }
+        "enable": true,
+        "iconColor": "dark-purple",
+        "name": "Alerts",
+        "query": "SELECT \"alert_signature\", \"timestamp\" FROM \"alert\" WHERE \"alert_severity\" < 3",
+        "textColumn": "alert_signature"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 2,
+  "iteration": 1644502380303,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "alert_severity"
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
               },
-              "properties": [
-                {
-                  "id": "custom.width",
-                  "value": 22
-                },
-                {
-                  "id": "custom.displayMode",
-                  "value": "color-text"
-                },
-                {
-                  "id": "thresholds",
-                  "value": {
-                    "mode": "absolute",
-                    "steps": [
-                      {
-                        "color": "green",
-                        "value": null
-                      },
-                      {
-                        "color": "red",
-                        "value": 1
-                      },
-                      {
-                        "color": "orange",
-                        "value": 2
-                      },
-                      {
-                        "color": "yellow",
-                        "value": 3
-                      },
-                      {
-                        "color": "blue",
-                        "value": 4
-                      }
-                    ]
-                  }
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "Time"
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 0,
+        "y": 0
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(distinct(\"src_ip\")) FROM \"flow\" WHERE (\"application_name\" =~ /^DNS/) AND $timeFilter",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "src_ip"
+                ],
+                "type": "field"
               },
-              "properties": [
-                {
-                  "id": "custom.width",
-                  "value": 173
-                }
-              ]
+              {
+                "params": [],
+                "type": "distinct"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "application_name",
+              "operator": "=~",
+              "value": "/^DNS/"
             }
           ]
+        }
+      ],
+      "title": "Devices",
+      "type": "stat"
+    },
+    {
+      "datasource": "InfluxDB - Suricata",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         },
-        "gridPos": {
-          "h": 17,
-          "w": 9,
-          "x": 15,
-          "y": 11
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 0
+      },
+      "id": 16,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
         },
-        "id": 4,
-        "options": {
-          "frameIndex": 1,
-          "showHeader": true,
-          "sortBy": []
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "alert",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "alert_gid"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Alerts",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "decbytes"
         },
-        "pluginVersion": "8.1.5",
-        "targets": [
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 6,
+        "y": 0
+      },
+      "id": 18,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "bidirectional_bytes"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "I/O",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 9,
+        "y": 0
+      },
+      "id": 20,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "bidirectional_duration_ms"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Flows",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 12,
+        "y": 0
+      },
+      "id": 22,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "requested_server_name"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "distinct"
+              },
+              {
+                "params": [],
+                "type": "count"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "title": "Domains",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "continuous-GrYlRd"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 0,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "binBps"
+        },
+        "overrides": [
           {
-            "groupBy": [],
-            "measurement": "alert",
-            "orderByTime": "DESC",
-            "policy": "default",
-            "query": "SELECT \"alert_severity\", \"alert_category\", \"alert_signature\" FROM \"alert\" WHERE $timeFilter",
-            "rawQuery": false,
-            "refId": "A",
-            "resultFormat": "table",
-            "select": [
-              [
-                {
-                  "params": [
-                    "alert_severity"
-                  ],
-                  "type": "field"
-                }
+            "matcher": {
+              "id": "byFrameRefID",
+              "options": "B"
+            },
+            "properties": [
+              {
+                "id": "custom.axisPlacement",
+                "value": "right"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 9,
+        "x": 15,
+        "y": 0
+      },
+      "id": 12,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "1s"
               ],
-              [
-                {
-                  "params": [
-                    "alert_signature"
-                  ],
-                  "type": "field"
-                }
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
               ],
-              [
-                {
-                  "params": [
-                    "dest_ip"
-                  ],
-                  "type": "field"
-                }
-              ]
-            ],
-            "tags": []
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "bidirectional_bytes"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "src_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            },
+            {
+              "condition": "OR",
+              "key": "dst_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            }
+          ]
+        }
+      ],
+      "title": "I/O",
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 11,
+        "w": 15,
+        "x": 0,
+        "y": 4
+      },
+      "id": 2,
+      "options": {
+        "basemap": {
+          "config": {},
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": true,
+          "showDebug": false,
+          "showScale": false,
+          "showZoom": false
+        },
+        "layers": [
+          {
+            "config": {
+              "blur": 15,
+              "radius": 5,
+              "weight": {
+                "fixed": 1,
+                "max": 1,
+                "min": 0
+              }
+            },
+            "location": {
+              "mode": "auto"
+            },
+            "type": "heatmap"
           }
         ],
-        "title": "Suricata alerts",
-        "transformations": [
-          {
-            "id": "filterByValue",
-            "options": {
-              "filters": [
-                {
-                  "config": {
-                    "id": "isNotNull",
-                    "options": {}
-                  },
-                  "fieldName": "alert_signature"
-                }
+        "view": {
+          "id": "coords",
+          "lat": 34.829376,
+          "lon": -7.748209,
+          "zoom": 1.99
+        }
+      },
+      "targets": [
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
               ],
-              "match": "any",
-              "type": "include"
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "flows_5d",
+          "query": "SELECT \"latitude\", \"longitude\" FROM \"flows_5d\".\"flow\" WHERE (\"src_ip\" =~ /^$client_ip$/ OR \"dst_ip\" =~ /^$client_ip$/) AND $timeFilter AND latitude!=0",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "latitude"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "longitude"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "src_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            },
+            {
+              "condition": "OR",
+              "key": "dst_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            }
+          ]
+        }
+      ],
+      "title": "Servers location",
+      "type": "geomap"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "hidden",
+            "axisSoftMin": 0,
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 0
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "bidirectional_bytes (count)"
+            },
+            "properties": [
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "purple",
+                  "mode": "fixed"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 9,
+        "x": 15,
+        "y": 4
+      },
+      "id": 6,
+      "options": {
+        "barWidth": 0.38,
+        "groupWidth": 0.7,
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "orientation": "horizontal",
+        "showValue": "always",
+        "stacking": "none",
+        "text": {},
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT distinct(country_iso), sum(bidirectional_bytes) FROM \"flow\" WHERE $timeFilter GROUP BY country_iso",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "country"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "bidirectional_bytes"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "src_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            },
+            {
+              "condition": "OR",
+              "key": "dst_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            }
+          ]
+        }
+      ],
+      "title": "Flows per country",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "country"
+              }
+            ],
+            "match": "any",
+            "type": "include"
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Time": {
+                "aggregations": [],
+                "operation": null
+              },
+              "bidirectional_bytes": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              },
+              "country": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "country_iso": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "groupby"
+              }
             }
           }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "bidirectional_bytes (count)"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "barchart"
+    },
+    {
+      "alert": {
+        "alertRuleTags": {},
+        "conditions": [
+          {
+            "evaluator": {
+              "params": [
+                3
+              ],
+              "type": "lt"
+            },
+            "operator": {
+              "type": "and"
+            },
+            "query": {
+              "params": [
+                "A",
+                "1m",
+                "now"
+              ]
+            },
+            "reducer": {
+              "params": [],
+              "type": "last"
+            },
+            "type": "query"
+          }
         ],
-        "type": "table"
+        "executionErrorState": "alerting",
+        "for": "0",
+        "frequency": "10s",
+        "handler": 1,
+        "message": "Oulala !\n\n{{ $values.A }}\n\n\n${values}",
+        "name": "Panel Title alert",
+        "noDataState": "ok",
+        "notifications": [
+          {
+            "uid": "KTfgApzgz"
+          }
+        ]
+      },
+      "datasource": "InfluxDB - Suricata",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "Severity",
+            "axisPlacement": "right",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 1
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 9,
+        "x": 15,
+        "y": 12
+      },
+      "id": 10,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "hidden",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single"
+        }
+      },
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "alert",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"alert_severity\", \"alert_signature\" FROM \"alert\" WHERE $timeFilter",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "logs",
+          "select": [
+            [
+              {
+                "params": [
+                  "alert_severity"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "alert_signature"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "src_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            },
+            {
+              "condition": "OR",
+              "key": "dest_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [
+        {
+          "colorMode": "critical",
+          "op": "lt",
+          "value": 3,
+          "visible": true
+        }
+      ],
+      "title": "Alert timeline",
+      "type": "timeseries"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "purple",
+            "mode": "fixed"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": true
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Flow details",
+              "url": "d/dbmZaoZgk/flow-details?orgId=1&var-community_id=${__data.fields.community_id_b64}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "I/O"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "decbytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 185
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 20,
+        "w": 15,
+        "x": 0,
+        "y": 15
+      },
+      "id": 8,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "DESC",
+          "policy": "default",
+          "query": "SELECT \"application_category_name\" AS \"Category\", \"application_name\" AS \"Application\", \"requested_server_name\" AS \"Domain\", \"src_ip\" AS \"Source IP\", \"dst_ip\" AS \"Destination IP\", \"country_iso\" AS \"Country\", \"bidirectional_bytes\" AS \"I/O\", \"community_id_b64\" FROM \"flow\" WHERE (\"src_ip\" =~ /^$client_ip$/ OR \"dst_ip\" =~ /^$client_ip$/) AND $timeFilter ORDER BY time DESC",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "application_category_name"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "application_name"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "requested_server_name"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "src_ip"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "dst_ip"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "country_iso"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "bidirectional_bytes"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "bidirectional_bytes"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "src_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            },
+            {
+              "condition": "OR",
+              "key": "dst_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            }
+          ]
+        }
+      ],
+      "title": "Flows",
+      "type": "table"
+    },
+    {
+      "datasource": "InfluxDB - Suricata",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "filterable": true
+          },
+          "links": [
+            {
+              "targetBlank": true,
+              "title": "Flow",
+              "url": "d/dbmZaoZgk/flow-details?orgId=1&var-community_id=${__data.fields.community_id_b64}"
+            }
+          ],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "dark-red",
+                "value": 1
+              },
+              {
+                "color": "#EAB839",
+                "value": 2
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Severity"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 87
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    },
+                    {
+                      "color": "orange",
+                      "value": 2
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 3
+                    },
+                    {
+                      "color": "blue",
+                      "value": 4
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 176
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Category"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": null
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 20,
+        "w": 9,
+        "x": 15,
+        "y": 15
+      },
+      "id": 4,
+      "options": {
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "alert",
+          "orderByTime": "DESC",
+          "policy": "default",
+          "query": "SELECT \"alert_severity\" AS \"Severity\", \"alert_category\" AS \"Category\", \"alert_signature\" AS \"Rule\", \"src_ip\" AS \"Source IP\", \"dest_ip\" AS \"Destination IP\", \"community_id_b64\" FROM \"alert\" WHERE (\"src_ip\" =~ /^$client_ip$/ OR \"dest_ip\" =~ /^$client_ip$/) AND $timeFilter ORDER BY time DESC",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "alert_severity"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Severity"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "alert_category"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Category"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "alert_signature"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Rule"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "community_id"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "community_id"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "src_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            },
+            {
+              "condition": "OR",
+              "key": "dest_ip",
+              "operator": "=~",
+              "value": "/^$client_ip$/"
+            }
+          ]
+        }
+      ],
+      "title": "Suricata alerts",
+      "transformations": [
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "Severity"
+              },
+              {
+                "config": {
+                  "id": "lower",
+                  "options": {
+                    "value": 3
+                  }
+                },
+                "fieldName": "Severity"
+              }
+            ],
+            "match": "all",
+            "type": "include"
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "10s",
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": null,
+        "definition": "SELECT \"src_ip\" FROM \"flow\" WHERE (\"application_name\" =~ /DNS/) ",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Device",
+        "multi": true,
+        "name": "client_ip",
+        "options": [],
+        "query": "SELECT \"src_ip\" FROM \"flow\" WHERE (\"application_name\" =~ /DNS/) ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 4,
+        "type": "query"
       }
-    ],
-    "refresh": "5s",
-    "schemaVersion": 30,
-    "style": "dark",
-    "tags": [],
-    "templating": {
-      "list": []
-    },
-    "time": {
-      "from": "now-7d",
-      "to": "now"
-    },
-    "timepicker": {},
-    "timezone": "",
-    "title": "Home",
-    "uid": "DJQFBakRz",
-    "version": 18
-  }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Home",
+  "uid": "Rfa_htzgk",
+  "version": 61
+}

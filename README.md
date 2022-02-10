@@ -1,6 +1,5 @@
-# pi-gen
-
-Tool used to create Raspberry Pi OS images. (Previously known as Raspbian).
+# PiRogueOS
+Tool based on the one used to create create Raspberry Pi OS images. (Previously known as Raspbian).
 
 
 ## Dependencies

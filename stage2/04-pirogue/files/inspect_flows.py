@@ -4,25 +4,44 @@ if __name__ == '__main__':
     import datetime
     from nfstream import NFStreamer
     from influxdb import InfluxDBClient
+    import communityid
     import geoip2.database
+    import base64
+
 
     db = 'flows'
     client = InfluxDBClient('127.0.0.1', 8086, '', '', db)
     client.create_database(db)
     client.create_retention_policy(f'{db}_5d', '5d', 1, database=db, default=True)
 
-    online_streamer = NFStreamer(source="wlan0")
+
+    online_streamer = NFStreamer(source="wlan0", active_timeout=4*60)
     reader = geoip2.database.Reader('/etc/pirogue/GeoLite2-City.mmdb')
+    cid = communityid.CommunityID()
 
     systemd.daemon.notify('READY=1')
 
     for flow in online_streamer:
         try:
+            tpl = communityid.FlowTuple(flow.protocol, flow.src_ip, flow.dst_ip, flow.src_port, flow.dst_port)
+            community_id = cid.calc(tpl)
+            community_id_b64 = base64.b64encode(bytes(community_id, 'utf-8')).decode('utf-8')
+        except:
+            community_id = ''
+            community_id_b64 = ''
+
+        try:
             obj = {
                 'measurement': 'flow',
                 'tags': {
                     'application_name': flow.application_name,
-                    'application_category_name': flow.application_category_name
+                    'application_category_name': flow.application_category_name,
+                    'src_ip': flow.src_ip,
+                    'src_mac': flow.src_mac,
+                    'dst_ip': flow.dst_ip,
+                    'dst_mac': flow.dst_mac,
+                    'community_id': community_id,
+                    'community_id_b64': community_id_b64
                 },
                 'time': datetime.datetime.fromtimestamp(flow.bidirectional_first_seen_ms/1000.0).astimezone().isoformat(),
                 'fields': {
@@ -37,6 +56,9 @@ if __name__ == '__main__':
                     'dst_mac': flow.dst_mac,
                     'dst_port': flow.dst_port,
 
+                    'dst2src_bytes': flow.dst2src_bytes,
+                    'src2dst_bytes': flow.src2dst_bytes,
+
                     'application_name': flow.application_name,
                     'application_category_name': flow.application_category_name,
 
@@ -48,9 +70,9 @@ if __name__ == '__main__':
 
             try:
                 response = reader.city(flow.dst_ip)
-                obj['fields']['country'] = response.country.name
-                obj['fields']['country_iso'] = response.country.iso_code
-                obj['fields']['city'] = response.city.name
+                obj['tags']['country'] = response.country.name
+                obj['tags']['country_iso'] = response.country.iso_code
+                obj['tags']['city'] = response.city.name
                 obj['fields']['latitude'] = response.location.latitude
                 obj['fields']['longitude'] = response.location.longitude
             except Exception:

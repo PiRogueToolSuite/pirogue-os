@@ -1,0 +1,994 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 8,
+  "iteration": 1644504464214,
+  "links": [],
+  "panels": [
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 2,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 16,
+      "options": {
+        "content": "Community ID: `${community_id}`",
+        "mode": "markdown"
+      },
+      "pluginVersion": "8.1.5",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 0,
+        "y": 2
+      },
+      "id": 8,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "/^value$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"flow\" WHERE (\"community_id\" =~ /^$community_id$/) AND $timeFilter",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "community_id_b64",
+              "operator": "=~",
+              "value": "/^$community_id$/"
+            }
+          ]
+        }
+      ],
+      "title": "Flows",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "decbytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 2
+      },
+      "id": 6,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "/^bidirectional_bytes$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"bidirectional_bytes\" FROM \"flow\" WHERE (\"community_id\" =~ /^$community_id$/)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "bidirectional_bytes"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "community_id_b64",
+              "operator": "=~",
+              "value": "/^$community_id$/"
+            }
+          ]
+        }
+      ],
+      "title": "I/O bytes",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          },
+          "unit": "ms"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 8,
+        "y": 2
+      },
+      "id": 10,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "sum"
+          ],
+          "fields": "/^flow\\.bidirectional_duration_ms$/",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"bidirectional_duration_ms\" FROM \"flow\" WHERE (\"community_id\" =~ /^$community_id$/)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "bidirectional_duration_ms"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "community_id_b64",
+              "operator": "=~",
+              "value": "/^$community_id$/"
+            }
+          ]
+        }
+      ],
+      "title": "Duration",
+      "type": "stat"
+    },
+    {
+      "datasource": "InfluxDB - Suricata",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "noValue": "0",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "purple",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 12,
+        "y": 2
+      },
+      "id": 12,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "count"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "alert",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"value\" FROM \"alert\" WHERE (\"community_id\" =~ /^$community_id$/)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "community_id_b64",
+              "operator": "=~",
+              "value": "/^$community_id$/"
+            }
+          ]
+        }
+      ],
+      "title": "Alerts",
+      "type": "stat"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 16,
+        "y": 2
+      },
+      "id": 14,
+      "options": {
+        "basemap": {
+          "config": {},
+          "type": "default"
+        },
+        "controls": {
+          "mouseWheelZoom": true,
+          "showAttribution": false,
+          "showDebug": false,
+          "showScale": false,
+          "showZoom": false
+        },
+        "layers": [
+          {
+            "config": {
+              "color": {
+                "fixed": "purple"
+              },
+              "fillOpacity": 0.4,
+              "shape": "triangle",
+              "showLegend": false,
+              "size": {
+                "fixed": 5,
+                "max": 15,
+                "min": 2
+              }
+            },
+            "type": "markers"
+          }
+        ],
+        "view": {
+          "id": "coords",
+          "lat": 14.604847,
+          "lon": -2.109375,
+          "zoom": 1
+        }
+      },
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"latitude\", \"longitude\" FROM \"flow\" WHERE (\"community_id\" =~ /^$community_id$/)  AND latitude!=0",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "latitude"
+                ],
+                "type": "field"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "longitude"
+                ],
+                "type": "field"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "community_id_b64",
+              "operator": "=~",
+              "value": "/^$community_id$/"
+            }
+          ]
+        }
+      ],
+      "type": "geomap"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 6
+      },
+      "id": 20,
+      "panels": [],
+      "title": "Alerts",
+      "type": "row"
+    },
+    {
+      "datasource": "InfluxDB - Suricata",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sev."
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 46
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Proto"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 55
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "port 1"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 66
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "port 2"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 63
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 152
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Rule"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 857
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Source IP"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 134
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Destination IP"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 138
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Category"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 288
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 24,
+        "x": 0,
+        "y": 7
+      },
+      "id": 18,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "alert",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"alert_category\" AS \"Category\", \"alert_signature\" AS \"Rule\", \"alert_severity\" AS \"Sev.\", \"app_proto\" AS \"Proto\", \"src_ip\" AS \"Source IP\", \"src_port\" AS \"port\", \"dest_ip\" AS \"Destination IP\", \"dest_port\" AS \"port\" FROM \"alert\" WHERE (\"community_id\" =~ /^$community_id$/) ",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "alert_category"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Category"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "alert_signature"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Rule"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "alert_severity"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Sev."
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "app_proto"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Proto"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "src_ip"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Source IP"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "src_port"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "port"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "dest_ip"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Destination IP"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "dest_port"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "port"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "community_id_b64",
+              "operator": "=~",
+              "value": "/^$community_id$/"
+            }
+          ]
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 12
+      },
+      "id": 4,
+      "panels": [],
+      "title": "Flows",
+      "type": "row"
+    },
+    {
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 152
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 24,
+        "x": 0,
+        "y": 13
+      },
+      "id": 2,
+      "options": {
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "8.1.5",
+      "targets": [
+        {
+          "groupBy": [],
+          "measurement": "flow",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT \"application_category_name\" as \"Category\", \"application_name\" as \"Application\", \"src_ip\" as \"Source IP\", \"dst_ip\" as \"Destination IP\", \"requested_server_name\" as \"Domain\" FROM \"flow\" WHERE (\"community_id\" =~ /^$community_id$/)",
+          "rawQuery": false,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
+            [
+              {
+                "params": [
+                  "application_category_name"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Category"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "application_name"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Application"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "src_ip"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Source IP"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "dst_ip"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Destination IP"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "requested_server_name"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Domain"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "src_port"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Source port"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "dst_port"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [
+                  "Destination port"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "community_id_b64",
+              "operator": "=~",
+              "value": "/^$community_id$/"
+            }
+          ]
+        }
+      ],
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "indexByName": {
+              "Application": 2,
+              "Category": 1,
+              "Destination IP": 5,
+              "Destination port": 6,
+              "Domain": 7,
+              "Source IP": 3,
+              "Source port": 4,
+              "Time": 0
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "refresh": "",
+  "schemaVersion": 30,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "MTpwR0VXaVRZSXNEbXNVS1pxMGw0cFFrQlcyNXM9",
+          "value": "MTpwR0VXaVRZSXNEbXNVS1pxMGw0cFFrQlcyNXM9"
+        },
+        "datasource": null,
+        "definition": "SELECT \"community_id_b64\", \"bidirectional_bytes\" FROM \"flow\"",
+        "description": null,
+        "error": null,
+        "hide": 2,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "community_id",
+        "options": [],
+        "query": "SELECT \"community_id_b64\", \"bidirectional_bytes\" FROM \"flow\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Flow details",
+  "uid": "dbmZaoZgk",
+  "version": 30
+}
