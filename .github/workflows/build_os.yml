@@ -13,11 +13,16 @@ jobs:
     - name: Prepare host 🔧
       run: "sudo apt-get install -y coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx gpg"
 
+    - name: Configure build 🔧
+      run: "touch stage3/SKIP stage4/SKIP stage5/SKIP"
+
     - name: Build 🔧
       run: "sudo bash build.sh -c config"
 
     - name: Upload artifacts 🚀
-      uses: actions/upload-artifact@v2
+      uses: alexellis/upload-assets@0.2.2
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
       with:
-        name: PiRogueOS
-        path: deploy/*
+        asset_paths: '["./deploy/*"]'
+        
