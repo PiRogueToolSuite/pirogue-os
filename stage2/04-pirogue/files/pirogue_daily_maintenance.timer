@@ -1,9 +1,0 @@
-[Unit]
-Description=Run PiRogue maintenance daily
-
-[Timer]
-OnCalendar=daily
-Persistent=true
-
-[Install]
-WantedBy=timers.target

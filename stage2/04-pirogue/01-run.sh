@@ -66,26 +66,17 @@ systemctl enable grafana-server
 grafana-cli plugins install grafana-worldmap-panel
 EOF
 
-mkdir -p "${ROOTFS_DIR}/etc/grafana/provisioning/datasources"
-install -v -m 644 files/grafana_datasources.yml	        "${ROOTFS_DIR}/etc/grafana/provisioning/datasources/datasources.yml"
-
-mkdir -p "${ROOTFS_DIR}/etc/grafana/provisioning/dashboards"
-install -v -m 644 files/grafana_dashboards.yml	        "${ROOTFS_DIR}/etc/grafana/provisioning/dashboards/dashboards.yml"
-
-mkdir -p "${ROOTFS_DIR}/var/lib/grafana/dashboards"
-install -v -m 644 files/grafana_main_dashboard.json	 "${ROOTFS_DIR}/var/lib/grafana/dashboards/pirogue-dashboard.json"
-
 install -v -m 644 files/grafana.ini	 "${ROOTFS_DIR}/etc/grafana/grafana.ini"
+
 
 # Install Python stuff
 on_chroot << EOF
 echo "Install Python stuff"
-pip3 install -U pyshark frida-tools objection geoip2 Adafruit-Blinka Pillow communityid numpy==1.22.0 
+pip3 install -U pyshark frida-tools objection geoip2 Adafruit-Blinka Pillow communityid numpy==1.22.0 mvt
 EOF
+
 ###
 # Configure Suricata
-install -m 644 files/suricata.yaml  "${ROOTFS_DIR}/etc/suricata/"
-
 on_chroot << EOF
 suricata-update --no-check-certificate update-sources
 suricata-update --no-check-certificate enable-source et/open || true
@@ -95,50 +86,11 @@ suricata-update --no-check-certificate enable-source sslbl/ssl-fp-blacklist || t
 suricata-update --no-check-certificate 
 EOF
 
-###
-# Configure PiRogue
-mkdir -p "${ROOTFS_DIR}/etc/pirogue/"
-install -m 644 files/read_suricata_eve_socket.py  "${ROOTFS_DIR}/etc/pirogue/"
-install -m 644 files/pirogue_eve_collector.service  "${ROOTFS_DIR}/etc/systemd/system/pirogue_eve_collector.service"
-
-on_chroot << EOF
-systemctl enable pirogue_eve_collector
-EOF
-
-# PiRogue maintenance script
-install -m 755 files/pirogue_maintenance.sh  "${ROOTFS_DIR}/etc/pirogue/"
-install -m 644 files/pirogue_daily_maintenance.timer  "${ROOTFS_DIR}/etc/systemd/system/pirogue_daily_maintenance.timer"
-install -m 644 files/pirogue_daily_maintenance.service  "${ROOTFS_DIR}/etc/systemd/system/pirogue_daily_maintenance.service"
-
-on_chroot << EOF
-systemctl enable pirogue_daily_maintenance.service
-systemctl enable pirogue_daily_maintenance.timer
-EOF
-
 install -m 644 files/pirogue_rfkill.service  "${ROOTFS_DIR}/etc/systemd/system/pirogue_rfkill.service"
 on_chroot << EOF
 systemctl enable pirogue_rfkill
 EOF
 
-# Install DPI service
-install -m 644 files/GeoLite2-City.mmdb  "${ROOTFS_DIR}/etc/pirogue/"
-install -m 644 files/inspect_flows.py  "${ROOTFS_DIR}/etc/pirogue/"
-install -m 644 files/pirogue_inspect_flows.service  "${ROOTFS_DIR}/etc/systemd/system/pirogue_inspect_flows.service"
-
-on_chroot << EOF
-systemctl enable pirogue_inspect_flows
-EOF
-
-# Install screen service
-install -m 644 files/B612-Regular.ttf  "${ROOTFS_DIR}/etc/pirogue/"
-install -m 644 files/ST7789.py  "${ROOTFS_DIR}/etc/pirogue/"
-install -m 644 files/pirogue_infos_screen.py  "${ROOTFS_DIR}/etc/pirogue/"
-install -m 644 files/infos.bmp  "${ROOTFS_DIR}/etc/pirogue/"
-install -m 644 files/pirogue_infos_screen.service  "${ROOTFS_DIR}/etc/systemd/system/pirogue_infos_screen.service"
-
-on_chroot << EOF
-systemctl enable pirogue_infos_screen
-EOF
 
 # Enable I2C and SPI
 on_chroot << EOF
@@ -158,11 +110,6 @@ install -m 644 files/85-hwclock.rules "/etc/udev/rules.d/85-hwclock.rules"
 # Configure temperature regulation
 on_chroot << EOF
 echo dtoverlay=gpio-fan,gpiopin=13,temp=37000 >> /boot/config.txt
-EOF
-
-# Install MVT
-on_chroot << EOF
-pip3 install mvt
 EOF
 
 ###
@@ -207,6 +154,7 @@ cp example/ndpiReader /usr/local/bin/ndpiReader
 cp src/lib/libndpi.a /usr/local/lib/libndpi.a
 cd ..
 rm -rf nDPI
+
 # nfstream
 git clone https://github.com/nfstream/nfstream.git
 cd nfstream
@@ -214,4 +162,14 @@ git checkout v6.3.5
 python3 -m pip install -r requirements.txt
 python3 setup.py bdist_wheel
 pip3 install . 
+EOF
+
+
+###
+# Install PiRogue packages
+on_chroot << EOF
+curl -o /etc/apt/sources.list.d/pirogue.list "https://piroguetoolsuite.github.io/ppa/pirogue.list"
+curl https://piroguetoolsuite.github.io/ppa/Key.gpg | apt-key add -
+apt update
+apt install -y -o Dpkg::Options::="--force-overwrite" pirogue-base
 EOF

@@ -1,0 +1,20 @@
+name: 'Build PiRogue OS'
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out 🛎️
+      uses: actions/checkout@v2
+
+    - name: Build 🔧
+      run: "sh build-docker.sh -c config"
+
+    - name: Upload artifacts 🚀
+      uses: actions/upload-artifact@v2
+      with:
+        name: PiRogueOS
+        path: deploy/*
