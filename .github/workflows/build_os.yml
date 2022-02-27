@@ -10,8 +10,11 @@ jobs:
     - name: Check out 🛎️
       uses: actions/checkout@v2
 
+    - name: Prepare host 🔧
+      run: "apt-get install -y coreutils quilt parted qemu-user-static debootstrap zerofree zip dosfstools libarchive-tools libcap2-bin grep rsync xz-utils file git curl bc qemu-utils kpartx gpg"
+
     - name: Build 🔧
-      run: "bash build-docker.sh -c config"
+      run: "bash build.sh -c config"
 
     - name: Upload artifacts 🚀
       uses: actions/upload-artifact@v2
