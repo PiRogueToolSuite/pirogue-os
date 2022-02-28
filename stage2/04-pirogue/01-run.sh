@@ -83,6 +83,7 @@ suricata-update --no-check-certificate enable-source et/open || true
 suricata-update --no-check-certificate enable-source oisf/trafficid || true
 suricata-update --no-check-certificate enable-source ptresearch/attackdetection || true
 suricata-update --no-check-certificate enable-source sslbl/ssl-fp-blacklist || true
+suricata-update add-source PTS https://piroguetoolsuite.github.io/suricata-rules/suricata.rules
 suricata-update --no-check-certificate 
 EOF
 

@@ -3,6 +3,9 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -25,4 +28,3 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
       with:
         asset_paths: '["./deploy/*"]'
-        
