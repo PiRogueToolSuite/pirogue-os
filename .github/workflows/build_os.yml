@@ -27,4 +27,4 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ github.token }}
       with:
-        asset_paths: '["./deploy/*.info", "./deploy/*..img.xz"]'
+        asset_paths: '["./deploy/*.info", "./deploy/*.img.xz"]'
