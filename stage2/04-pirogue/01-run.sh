@@ -1,5 +1,10 @@
 #!/bin/bash -e
 
+# Disable useerconfig asking for the creation of a new unix user
+on_chroot << EOF
+deb-systemd-helper disable userconfig.service
+EOF
+
 ###
 # Install PiRogue packages
 on_chroot << EOF
