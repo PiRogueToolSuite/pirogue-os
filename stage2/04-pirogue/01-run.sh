@@ -2,7 +2,7 @@
 
 # Disable useerconfig asking for the creation of a new unix user
 on_chroot << EOF
-deb-systemd-helper disable userconfig.service
+systemctl disable userconfig.service
 EOF
 
 ###
