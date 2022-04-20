@@ -1,7 +1,7 @@
 name: 'Build PiRogue OS'
 on:
   release:
-    types: [published]
+    types: [prereleased]
 
 permissions:
   contents: write
