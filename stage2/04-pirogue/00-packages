@@ -1,1 +1,6 @@
 adb
+libffi-dev
+python3-cffi-backend
+python3-lxml
+libxml2-dev
+libxslt1-dev
