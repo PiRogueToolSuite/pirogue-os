@@ -2,7 +2,7 @@
 
 # Disable useerconfig asking for the creation of a new unix user
 on_chroot << EOF
-systemctl disable userconfig.service
+apt-get remove --purge userconf-pi
 EOF
 
 ###
