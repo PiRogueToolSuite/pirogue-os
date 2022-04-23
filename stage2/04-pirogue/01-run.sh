@@ -13,3 +13,8 @@ curl -o /etc/apt/trusted.gpg.d/pirogue-os.asc "https://piroguetoolsuite.github.i
 apt update
 DEBIAN_FRONTEND=noninteractive apt install -y pirogue-base
 EOF
+
+if ! on_chroot dpkg-query -s pirogue-base; then
+  echo "E: pirogue-base wasn't successfully installed"
+  exit 1
+fi
