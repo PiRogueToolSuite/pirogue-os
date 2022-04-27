@@ -11,5 +11,6 @@ on_chroot << EOF
 curl -o /etc/apt/sources.list.d/pirogue-os.list "https://piroguetoolsuite.github.io/ppa/pirogue.list"
 curl -o /etc/apt/trusted.gpg.d/pirogue-os.asc "https://piroguetoolsuite.github.io/ppa/Key.gpg"
 apt update
+
 DEBIAN_FRONTEND=noninteractive apt install -y pirogue-base
 EOF
