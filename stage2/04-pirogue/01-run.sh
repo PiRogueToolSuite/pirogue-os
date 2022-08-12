@@ -8,6 +8,7 @@ EOF
 ###
 # Install PiRogue packages
 on_chroot << EOF
+export PIROGUE_IMAGE_BUILD=0
 curl -o /etc/apt/sources.list.d/pirogue-os.list "https://pts-project.org/ppa/pirogue.list"
 curl -o /etc/apt/trusted.gpg.d/pirogue-os.asc "https://pts-project.org/ppa/Key.gpg"
 apt update
