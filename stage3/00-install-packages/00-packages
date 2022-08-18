@@ -13,3 +13,5 @@ obconf
 arandr
 libcamera-tools
 libcamera-apps
+screen
+tmux
