@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 cd output-pirogue-os/
-output_file="PiRogue-OS-$(date '+%Y-%m-%d').img"
+output_file="PiRogue-OS-12-${image_flavor}-$(date '+%Y-%m-%d').img"
 output_archive="${output_file}.xz"
 output_checksum="${output_archive}.sha256"
 
