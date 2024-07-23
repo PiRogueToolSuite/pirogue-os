@@ -2,7 +2,7 @@
 <img width="60px" src="https://pts-project.org/android-chrome-512x512.png">
 <h1>PiRogue OS</h1>
 <p>
-PiRogue OS is a slightly modified version of Debian you can flash on an SD card to quickly turn a Raspberry Pi into a PiRogue. Want to build one? Follow the guide "<a href="https://pts-project.org/guides/g1/" alt="How to setup a PiRogue">How to setup a PiRogue</a>".
+<strong>⚠️ Moved to the <a href="https://github.com/PiRogueToolSuite/pirogue-images">pirogue-images</a> repository ⚠️</strong>
 </p>
 <p>
 License: GPLv3
